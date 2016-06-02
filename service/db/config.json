@@ -1,0 +1,7 @@
+{
+  "user": "postgres",
+  "password": "iforgot",
+  "host": "localhost",
+  "port": 5432,
+  "database": "hpe-global"
+}
