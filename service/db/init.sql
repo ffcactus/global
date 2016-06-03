@@ -7,7 +7,7 @@
 DROP table section, section_section, node, node_section;
 
 CREATE TABLE IF NOT EXISTS section(
-  id SERIAL PRIMARY KEY,
+  id SERIAL NOT NULL PRIMARY KEY,
   name varchar(256)
 );
 

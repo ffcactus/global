@@ -23,7 +23,7 @@ function createSection(name) {
 function createSectionSection(parentId, childId) {
   var promise = new Promise((resolve, reject) => {
     section.createSectionSection(parentId, childId, (err, result) => {
-      if(err) {
+      if (err) {
         reject(err);
       } else {
         resolve(result);
@@ -36,7 +36,7 @@ function createSectionSection(parentId, childId) {
 function getSectionIdByName(name) {
   var promise = new Promise((resolve, reject) => {
     section.getIdByName(name, (err, result) => {
-      if(err) {
+      if (err) {
         reject(err);
       } else {
         resolve(result);
@@ -46,43 +46,44 @@ function getSectionIdByName(name) {
   return promise;
 }
 
-function main() {
-  // var idHpe, idEg;
-  // db.init().then(
-  //   createSection("HPE")  
-  // ).then(
-  //   createSection("EG")
-  // ).then(
-  //   getSectionIdByName("HPE")
-  // ).then((result) => {
-  //   idHpe = result.row[0];
-  // }).then(
-  //   getSectionIdByName("EG")
-  // ).then((result) => {
-  //   idEg = result.row[0]; 
-  // }).then(
-  //   createSectionSection(null, idHpe)
-  // ).then(
-  //   createSectionSection(idHpe, idEg)
-  // ).then((result) => {
-  //   console.info("Done.", {result}); 
-  // });
-  
-  var step1 = db.init().then(
-    createSection("HPE")
-  ).then(
-    createSection("EG")
-  );
-  var step2 = step1.then(getSectionIdByName("HPE"));
-  var step3 = step1.then(getSectionIdByName("EG"));
-  
-  var step4 = Promise.all([step1, step2, step3]).then((result) => {
-    console.info({result});  
+function main() { 
+  var init = db.init();
+  var createHpe = init.then(() => {
+    return createSection("HPE");
+  }, (reject) => {
+    console.error({ reject });
   });
-  
-  step4.then((result) => {
-    console.info("step4 done");
+
+  var createEg = init.then(() => {
+    return createSection("EG");
+  }, (reject) => {
+    console.error({ reject });
+  });
+
+  var hpeId = createHpe.then(() => {
+    return getSectionIdByName("HPE");
+  }, (reject) => {
+    console.error({ reject });
+  });
+
+  var egId = createEg.then(() => {
+    return getSectionIdByName("EG");
+  });
+
+  var linkHpeEg = Promise.all([hpeId, egId]).then((values) => {
+    return createSectionSection(values[0].rows[0].id, values[1].rows[0].id);
+  }, (reject) => {
+    console.error({ reject });
+  });
+
+  linkHpeEg.then((fulfill) => {
+    console.info('done');
+  }, (reject) => {
+    console.error({ reject });
   });
 }
+
+
+
 
 main();
