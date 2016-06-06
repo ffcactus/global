@@ -66,11 +66,34 @@ function getChildrenIdByParentId(id) {
   return promise;
 }
 
+function getAllSectionSection() {
+  var promise = new Promise((resolve, reject) => {
+    var sql = "select * from section_section;";
+    db.textQuery(sql, (err, result) => {
+      if(err) {
+        reject(err);        
+      } else {
+        var ret = [];
+        result.rows.map((eachRow) => {
+          ret.push({
+            "parent": eachRow.parent,
+            "child": eachRow.child
+          });
+        });
+        resolve(ret);
+      }
+    });
+  });
+  return promise;
+}
+
 function getSectionTree() {
   var rootId = getRootId();
-  var children = rootId.then((id) => {
-    return getChildrenIdByParentId(id);
+  var tree = rootId.then((id) => {
+    
   });
+
   
   return rootId; 
 }
+
