@@ -61,31 +61,39 @@ var SectionTree = React.createClass({
 
   getInitialState: function() {
     return {
-      "open": false
+      folderOpenRecords: {}
     }
   },
 
   onFolderClick: function(event) {
-    console.log(event.target.id.substring(this.props.checkboxIdPrefix.length));
+    var id = event.target.id.substring(this.props.checkboxIdPrefix.length);
+    var open = this.isFolderOpen(id);
+    this.state.folderOpenRecords[id] = !open;
+    this.setState({
+      folderOpenRecords : this.state.folderOpenRecords
+    });
   },
 
   isFolderOpen(id) {
-    if (folderOpenRecords.hasOwnProperty(id)) {
-      return folderOpenRecords[id];
+    if (this.state.folderOpenRecords.hasOwnProperty(id)) {
+      return this.state.folderOpenRecords[id];
     } else {
       return this.props.defaultOpen;
     }
   },
 
   makeNode: function(sectionTree) {
+    var subSection = this.isFolderOpen(sectionTree.id) ?
+      sectionTree.children.map(function(each) {
+        return this.makeNode(each);
+      }, this) : "";
+
     return (
       <ul key={sectionTree.id}>
         <li>
           <input type="checkbox" id={this.props.checkboxIdPrefix + sectionTree.id} onClick={this.onFolderClick}/>
           <label htmlFor={sectionTree.id}>{sectionTree.name}</label>
-          {sectionTree.children.map(function(each) {
-            return this.makeNode(each);
-          }, this)}
+          {subSection}
         </li>
       </ul>
     );
