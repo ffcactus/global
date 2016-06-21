@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import HelloWorld from './hello';
+import SectionTree from './section';
 
 // require('react');
 // require('./section');
-
+//
 var sectionTree = {
   "name": "root",
   "id": "id_0001",
@@ -56,7 +56,10 @@ var sectionTree = {
   ]
 };
 
-React.render(
-  <HelloWorld/>,
-  document.body
+var divForAll = document.createElement('div');
+divForAll.setAttribute("id", "divForAll");
+document.body.appendChild(divForAll);
+render(
+  <SectionTree sectionTree = {sectionTree} />,
+  divForAll
 );

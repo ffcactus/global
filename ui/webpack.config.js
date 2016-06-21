@@ -6,13 +6,15 @@ const parts = require('./libs/parts');
 const pkg = require('./package.json');
 
 const PATHS = {
-    app: path.join(__dirname, 'app/js'),
-    build: path.join(__dirname, 'build')
+  css: path.join(__dirname, 'app', 'css'),
+  js: path.join(__dirname, 'app', 'js'),
+  app: path.join(__dirname, 'app'),
+  build: path.join(__dirname, 'build')
 };
 
 const common = {
     entry: {
-        app: PATHS.app,
+        app: PATHS.js,
         vendor: Object.keys(pkg.dependencies)
     },
     output: {
@@ -25,13 +27,16 @@ const common = {
         exclude: /node_modules/,
         loader: 'babel',
         query: {
-          presets: ['react']
+          presets: ["es2015", 'react']
         }
+      }, {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader',
       }]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Webpack demo'
+            title: 'Global',
         })
     ]
 };
@@ -55,12 +60,12 @@ switch(process.env.npm_lifecycle_event) {
                 'process.env.NODE_ENV',
                 'production'
             ),
-            // parts.extractBundle({
-            //     name: 'vendor',
-            //     entries: ['react']
-            // }),
-            // parts.minify(),
-            parts.setupCSS(PATHS.app)
+            parts.extractBundle({
+                name: 'vendor',
+                entries: ['react']
+            }),
+            parts.minify(),
+            parts.setupCSS(PATHS.css)
         );
         break;
     default:
