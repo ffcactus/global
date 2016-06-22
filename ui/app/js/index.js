@@ -1,65 +1,21 @@
 import React from 'react';
+import { createStore } from 'redux';
 import { render } from 'react-dom';
 import SectionTree from './section';
+import SectionAction from './sectionAction';
 
 // require('react');
 // require('./section');
 //
-var sectionTree = {
-  "name": "root",
-  "id": "id_0001",
-  "children": [
-    {
-      "name": "folder0",
-      "id": "id_0002",
-      "children": [
-        {
-          "name": "folder1",
-          "id": "id_0003",
-          "children": []
-        },
-        {
-          "name": "folder2",
-          "id": "id_0004",
-          "children": [
-            {
-              "name": "folder3",
-              "id": "id_0005",
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "folder4",
-      "id": "id_0006",
-      "children": [
-        {
-          "name": "folder5",
-          "id": "id_0007",
-          "children": []
-        },
-        {
-          "name": "folder2",
-          "id": "id_0008",
-          "children": [
-            {
-              "name": "folder3",
-              "id": "id_0009",
-              "children": []
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
+
 
 var divForAll = document.createElement('div');
 divForAll.setAttribute("id", "divForAll");
 document.body.appendChild(divForAll);
+
+let sectionStore = createStore(SectionAction);
+
 render(
-  <SectionTree sectionTree = {sectionTree} />,
+  <SectionTree sectionTree = {sectionStore.getState()} />,
   divForAll
 );

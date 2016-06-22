@@ -14,8 +14,8 @@ const PATHS = {
 
 const common = {
     entry: {
-        app: PATHS.js,
-        vendor: Object.keys(pkg.dependencies)
+      app: PATHS.js,
+      vendor: Object.keys(pkg.dependencies)
     },
     output: {
         path: PATHS.build,
@@ -29,14 +29,11 @@ const common = {
         query: {
           presets: ["es2015", 'react']
         }
-      }, {
-        test: /\.hbs$/,
-        loader: 'handlebars-loader',
       }]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Global',
+            title: 'Global'
         })
     ]
 };
