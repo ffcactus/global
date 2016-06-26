@@ -1,56 +1,42 @@
-var sectionTree = {
-  "name": "root",
-  "id": "id_0001",
-  "children": [
-    {
-      "name": "folder0",
-      "id": "id_0002",
-      "children": [
-        {
-          "name": "folder1",
-          "id": "id_0003",
-          "children": []
-        },
-        {
-          "name": "folder2",
-          "id": "id_0004",
-          "children": [
-            {
-              "name": "folder3",
-              "id": "id_0005",
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "folder4",
-      "id": "id_0006",
-      "children": [
-        {
-          "name": "folder5",
-          "id": "id_0007",
-          "children": []
-        },
-        {
-          "name": "folder2",
-          "id": "id_0008",
-          "children": [
-            {
-              "name": "folder3",
-              "id": "id_0009",
-              "children": []
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
+export const ADD_SECTION = "ADD_SECTION";
+export const DELETE_SECTION = "DELETE_SECTION";
+export const UPDATE_SECTION = "UPDATE_SECTION";
+export const SELECT_SECTION = "SELECT_SECTION";
+export const GET_SECTION = "GET_SECTION";
 
-function reducer(state = sectionTree, action) {
-  return state;
+export function addSection(name) {
+  return {
+    type: ADD_SECTION,
+    name
+  };
 }
 
-export default reducer;
+export function deleteSection(id) {
+  return {
+    type: DELETE_SECTION,
+    id
+  };
+}
+
+export function updateSection(id, name) {
+  return {
+    type: UPDATE_SECTION,
+    id,
+    name
+  };
+}
+
+export function selectSection(id) {
+  return {
+    type: SELECT_SECTION,
+    id
+  };
+}
+
+export function getSection(section, section_section) {
+  return {
+    type: GET_SECTION,
+    section,
+    section_section
+  }
+}
